@@ -6,24 +6,22 @@
     <title>Document</title>
 </head>
 <body>
-    <button onclick="subscribe()">Subscribe</button>
+    <button id="subscript_btn">Subscribe</button>
 </body>
 <script>
     addEventListener('load',async () => {
        let sw=await navigator.serviceWorker.register('sw.js');
        console.log(sw);
-       
+       document.getElementById("subscript_btn").addEventListener('click',async (e)=>{
+            const publicVapidKey='BIjr4PxYaaWx1SWAsrsREw_ZbrUWNk7iPKWBdTc73QBT0qEW6f9HCTd79QfkVV5GryOd5zIjhA1oIVWohtgGheQ';
+            let sw=await navigator.serviceWorker.ready;
+            let push=await sw.pushManager.subscribe({
+                userVisibleOnly:true,
+                applicationServerKey:publicVapidKey
+            })
+            console.log(JSON.stringify(push));
+            
+       });
     });
-    async function subscribe(){
-        const publicVapidKey='BIjr4PxYaaWx1SWAsrsREw_ZbrUWNk7iPKWBdTc73QBT0qEW6f9HCTd79QfkVV5GryOd5zIjhA1oIVWohtgGheQ';
-        let sw=await navigator.serviceWorker.ready;
-        let push=await sw.pushManager.subscribe({
-            userVisibleOnly:true,
-            applicationServerKey:publicVapidKey
-        })
-        console.log(JSON.stringify(push));
-        
-
-
 </script>
 </html>
